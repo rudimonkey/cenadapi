@@ -1,0 +1,2829 @@
+
+================================================================================
+FILE PATH: .editorconfig
+================================================================================
+
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.ts]
+quote_type = single
+ij_typescript_use_double_quotes = false
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+
+
+
+================================================================================
+FILE PATH: .gitignore
+================================================================================
+
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+
+
+
+================================================================================
+FILE PATH: README.md
+================================================================================
+
+# CenadaDashboard
+
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+
+## Development server
+
+To start a local development server, run:
+
+```bash
+ng serve
+```
+
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+## Code scaffolding
+
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+
+```bash
+ng generate component component-name
+```
+
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+
+```bash
+ng generate --help
+```
+
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+
+================================================================================
+FILE PATH: angular.json
+================================================================================
+
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "cenada-dashboard": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              }
+            ],
+            "styles": [
+              "src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "cenada-dashboard:build:production"
+            },
+            "development": {
+              "buildTarget": "cenada-dashboard:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.scss"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+
+
+================================================================================
+FILE PATH: package.json
+================================================================================
+
+{
+  "name": "cenada-dashboard",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/compiler": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@angular/platform-browser": "^20.0.0",
+    "@angular/router": "^20.0.0",
+    "primeicons": "^7.0.0",
+    "primeng": "^21.0.2",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zod": "^4.2.1",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.0.3",
+    "@angular/cli": "^20.0.3",
+    "@angular/compiler-cli": "^20.0.0",
+    "@types/jasmine": "~5.1.0",
+    "@types/pdf-parse": "^1.1.5",
+    "jasmine-core": "~5.7.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "pdf-parse": "^2.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.8.2"
+  }
+}
+
+
+
+================================================================================
+FILE PATH: public\assets\data\current-prices.json
+================================================================================
+
+{
+    "date": "2025-12-23",
+    "source": "PIMA-CENADA",
+    "products": [
+        {
+            "id": "prod-1",
+            "name": "Apio verde (mata)",
+            "unit": "Mata",
+            "priceMin": 1400,
+            "priceMax": 2000,
+            "mode": 1500,
+            "average": 1600,
+            "volatilityIndex": 0.375,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-2",
+            "name": "Ayote sazón",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-3",
+            "name": "Banano maduro",
+            "unit": "Kilo",
+            "priceMin": 600,
+            "priceMax": 900,
+            "mode": 700,
+            "average": 750,
+            "volatilityIndex": 0.4,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-4",
+            "name": "Banano verde",
+            "unit": "Kilo",
+            "priceMin": 500,
+            "priceMax": 800,
+            "mode": 600,
+            "average": 650,
+            "volatilityIndex": 0.462,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-5",
+            "name": "Brócoli",
+            "unit": "Kilo",
+            "priceMin": 2500,
+            "priceMax": 3500,
+            "mode": 3000,
+            "average": 2900,
+            "volatilityIndex": 0.345,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-6",
+            "name": "Cebolla amarilla",
+            "unit": "Malla (25 kg)",
+            "priceMin": 18000,
+            "priceMax": 22000,
+            "mode": 20000,
+            "average": 19500,
+            "pricePerKilo": 780,
+            "volatilityIndex": 0.205,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-7",
+            "name": "Cebolla blanca",
+            "unit": "Kilo",
+            "priceMin": 1200,
+            "priceMax": 1800,
+            "mode": 1500,
+            "average": 1450,
+            "volatilityIndex": 0.414,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-8",
+            "name": "Chile dulce jumbo",
+            "unit": "Kilo",
+            "priceMin": 1800,
+            "priceMax": 2800,
+            "mode": 2200,
+            "average": 2150,
+            "volatilityIndex": 0.465,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-9",
+            "name": "Chile dulce primera",
+            "unit": "Kilo",
+            "priceMin": 1500,
+            "priceMax": 2200,
+            "mode": 1800,
+            "average": 1750,
+            "volatilityIndex": 0.4,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-10",
+            "name": "Coliflor",
+            "unit": "Kilo",
+            "priceMin": 2200,
+            "priceMax": 3200,
+            "mode": 2800,
+            "average": 2650,
+            "volatilityIndex": 0.377,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-11",
+            "name": "Elote tierno (unidad)",
+            "unit": "Unidad",
+            "priceMin": 200,
+            "priceMax": 350,
+            "mode": 250,
+            "average": 270,
+            "volatilityIndex": 0.556,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-12",
+            "name": "Espinaca",
+            "unit": "Kilo",
+            "priceMin": 3000,
+            "priceMax": 4500,
+            "mode": 3500,
+            "average": 3600,
+            "volatilityIndex": 0.417,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-13",
+            "name": "Fresa",
+            "unit": "Kilo",
+            "priceMin": 5000,
+            "priceMax": 7000,
+            "mode": 6000,
+            "average": 5800,
+            "volatilityIndex": 0.345,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-14",
+            "name": "Lechuga americana",
+            "unit": "Unidad",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-15",
+            "name": "Lechuga romana",
+            "unit": "Unidad",
+            "priceMin": 700,
+            "priceMax": 1000,
+            "mode": 850,
+            "average": 820,
+            "volatilityIndex": 0.366,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-16",
+            "name": "Limón criollo",
+            "unit": "Kilo",
+            "priceMin": 1200,
+            "priceMax": 1800,
+            "mode": 1500,
+            "average": 1450,
+            "volatilityIndex": 0.414,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-17",
+            "name": "Limón mesino",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1400,
+            "mode": 1100,
+            "average": 1050,
+            "volatilityIndex": 0.571,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-18",
+            "name": "Mandarina",
+            "unit": "Kilo",
+            "priceMin": 1500,
+            "priceMax": 2200,
+            "mode": 1800,
+            "average": 1750,
+            "volatilityIndex": 0.4,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-19",
+            "name": "Mango verde",
+            "unit": "Kilo",
+            "priceMin": 1000,
+            "priceMax": 1600,
+            "mode": 1300,
+            "average": 1250,
+            "volatilityIndex": 0.48,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-20",
+            "name": "Manzana verde",
+            "unit": "Kilo",
+            "priceMin": 2500,
+            "priceMax": 3500,
+            "mode": 3000,
+            "average": 2850,
+            "volatilityIndex": 0.351,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-21",
+            "name": "Manzana roja",
+            "unit": "Kilo",
+            "priceMin": 2800,
+            "priceMax": 3800,
+            "mode": 3200,
+            "average": 3100,
+            "volatilityIndex": 0.323,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-22",
+            "name": "Melón",
+            "unit": "Kilo",
+            "priceMin": 900,
+            "priceMax": 1400,
+            "mode": 1100,
+            "average": 1100,
+            "volatilityIndex": 0.455,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-23",
+            "name": "Naranja dulce",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-24",
+            "name": "Papá blanca",
+            "unit": "Malla (45 kg)",
+            "priceMin": 35000,
+            "priceMax": 45000,
+            "mode": 40000,
+            "average": 39000,
+            "pricePerKilo": 867,
+            "volatilityIndex": 0.256,
+            "category": "Tuber"
+        },
+        {
+            "id": "prod-25",
+            "name": "Papa roja",
+            "unit": "Malla (45 kg)",
+            "priceMin": 38000,
+            "priceMax": 48000,
+            "mode": 42000,
+            "average": 41500,
+            "pricePerKilo": 922,
+            "volatilityIndex": 0.241,
+            "category": "Tuber"
+        },
+        {
+            "id": "prod-26",
+            "name": "Papaya",
+            "unit": "Kilo",
+            "priceMin": 700,
+            "priceMax": 1100,
+            "mode": 900,
+            "average": 850,
+            "volatilityIndex": 0.471,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-27",
+            "name": "Pepino de ensalada",
+            "unit": "Kilo",
+            "priceMin": 1200,
+            "priceMax": 1800,
+            "mode": 1500,
+            "average": 1450,
+            "volatilityIndex": 0.414,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-28",
+            "name": "Piña golden",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-29",
+            "name": "Plátano verde",
+            "unit": "Kilo",
+            "priceMin": 700,
+            "priceMax": 1100,
+            "mode": 900,
+            "average": 850,
+            "volatilityIndex": 0.471,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-30",
+            "name": "Repollo blanco",
+            "unit": "Kilo",
+            "priceMin": 600,
+            "priceMax": 1000,
+            "mode": 800,
+            "average": 750,
+            "volatilityIndex": 0.533,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-31",
+            "name": "Repollo morado",
+            "unit": "Kilo",
+            "priceMin": 1000,
+            "priceMax": 1600,
+            "mode": 1300,
+            "average": 1250,
+            "volatilityIndex": 0.48,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-32",
+            "name": "Sandía",
+            "unit": "Kilo",
+            "priceMin": 500,
+            "priceMax": 800,
+            "mode": 650,
+            "average": 620,
+            "volatilityIndex": 0.484,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-33",
+            "name": "Tomate cordobés",
+            "unit": "Caja",
+            "priceMin": 15000,
+            "priceMax": 20000,
+            "mode": 17500,
+            "average": 17000,
+            "volatilityIndex": 0.294,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-34",
+            "name": "Tomate milano",
+            "unit": "Caja",
+            "priceMin": 18000,
+            "priceMax": 24000,
+            "mode": 21000,
+            "average": 20500,
+            "volatilityIndex": 0.293,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-35",
+            "name": "Vainica",
+            "unit": "Kilo",
+            "priceMin": 2000,
+            "priceMax": 3000,
+            "mode": 2500,
+            "average": 2400,
+            "volatilityIndex": 0.417,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-36",
+            "name": "Yuca",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Tuber"
+        },
+        {
+            "id": "prod-37",
+            "name": "Zanahoria",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1400,
+            "mode": 1100,
+            "average": 1050,
+            "volatilityIndex": 0.571,
+            "category": "Vegetable"
+        }
+    ]
+}
+
+
+================================================================================
+FILE PATH: scripts\bundle_project.js
+================================================================================
+
+const fs = require('fs');
+const path = require('path');
+
+const outputFile = 'project_bundle.txt';
+// Directories to exclude
+const excludeDirs = [
+    'node_modules',
+    '.git',
+    'dist',
+    '.angular',
+    '.vscode',
+    '.idea'
+];
+
+// File extensions or names to exclude
+const excludeFiles = [
+    'package-lock.json',
+    'project_bundle.txt', // Don't include the output file itself
+    'build-output.txt',
+    '.DS_Store',
+    'Thumbs.db'
+];
+
+// Binary or non-text extensions to skip
+const binaryExtensions = [
+    '.png', '.jpg', '.jpeg', '.gif', '.ico', '.svg',
+    '.woff', '.woff2', '.ttf', '.eot',
+    '.pdf', '.zip', '.tar', '.gz', '.7z', '.rar',
+    '.exe', '.dll', '.so', '.dylib', '.bin', '.dat'
+];
+
+function isBinary(filePath) {
+    const ext = path.extname(filePath).toLowerCase();
+    return binaryExtensions.includes(ext);
+}
+
+function shouldExclude(dirOrFile) {
+    return excludeDirs.includes(dirOrFile) || excludeFiles.includes(dirOrFile);
+}
+
+function walkDir(dir, fileStream) {
+    const files = fs.readdirSync(dir).sort();
+
+    for (const file of files) {
+        if (shouldExclude(file)) {
+            continue;
+        }
+
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+
+        if (stat.isDirectory()) {
+            walkDir(filePath, fileStream);
+        } else {
+            if (isBinary(filePath)) {
+                // console.log(`Skipping binary file: ${filePath}`);
+                continue;
+            }
+
+            try {
+                const content = fs.readFileSync(filePath, 'utf8');
+                const relativePath = path.relative(__dirname, filePath); // Relative to script location, maybe relative to root is better?
+
+                // Let's make path relative to CWD (root usually)
+                const relativeToRoot = path.relative(process.cwd(), filePath);
+
+                fileStream.write(`\n================================================================================\n`);
+                fileStream.write(`FILE PATH: ${relativeToRoot}\n`);
+                fileStream.write(`================================================================================\n\n`);
+                fileStream.write(content);
+                fileStream.write(`\n\n`);
+
+                console.log(`Added: ${relativeToRoot}`);
+            } catch (err) {
+                console.error(`Error reading file ${filePath}: ${err.message}`);
+                fileStream.write(`\n[ERROR READING FILE: ${filePath}]\n`);
+            }
+        }
+    }
+}
+
+function main() {
+    const rootDir = process.cwd();
+    const outputPath = path.join(rootDir, outputFile);
+
+    console.log(`Bundling project from: ${rootDir}`);
+    console.log(`Output file: ${outputPath}`);
+
+    const stream = fs.createWriteStream(outputPath, { flags: 'w' });
+
+    walkDir(rootDir, stream);
+
+    stream.end();
+    console.log('Done!');
+}
+
+main();
+
+
+
+================================================================================
+FILE PATH: scripts\category-config.ts
+================================================================================
+
+/**
+ * Category configuration for product classification
+ * Maintainable mapping of product keywords to categories
+ */
+
+export type ProductCategory = 'Vegetable' | 'Fruit' | 'Tuber' | 'Protein' | 'Other';
+
+export interface CategoryMapping {
+    category: ProductCategory;
+    keywords: string[];
+}
+
+/**
+ * Category mappings based on product name keywords
+ * Add new keywords here as needed
+ */
+export const CATEGORY_MAPPINGS: CategoryMapping[] = [
+    {
+        category: 'Vegetable',
+        keywords: [
+            'apio', 'brócoli', 'brocoli', 'coliflor', 'repollo',
+            'lechuga', 'chile', 'tomate', 'cebolla', 'zanahoria',
+            'vainica', 'espinaca', 'ayote', 'calabaza', 'chayote',
+            'pepino', 'remolacha', 'rábano', 'cilantro', 'perejil',
+            'elote', 'maíz'
+        ]
+    },
+    {
+        category: 'Fruit',
+        keywords: [
+            'banano', 'banana', 'plátano', 'piña', 'papaya',
+            'mango', 'sandía', 'melón', 'naranja', 'limón',
+            'mandarina', 'fresa', 'uva', 'manzana', 'pera',
+            'guayaba', 'cas', 'maracuyá', 'carambola', 'granadilla'
+        ]
+    },
+    {
+        category: 'Tuber',
+        keywords: [
+            'papa', 'yuca', 'camote', 'ñame', 'ñampí',
+            'tiquisque', 'jengibre', 'malanga'
+        ]
+    },
+    {
+        category: 'Protein',
+        keywords: [
+            'huevo', 'carne', 'pollo', 'pescado', 'res',
+            'cerdo', 'pavo', 'atún', 'tilapia'
+        ]
+    }
+];
+
+/**
+ * Categorizes a product based on its name
+ * @param name Product name
+ * @returns ProductCategory
+ */
+export function categorizeProduct(name: string): ProductCategory {
+    const nameLower = name.toLowerCase();
+
+    for (const mapping of CATEGORY_MAPPINGS) {
+        if (mapping.keywords.some(keyword => nameLower.includes(keyword))) {
+            return mapping.category;
+        }
+    }
+
+    return 'Other';
+}
+
+/**
+ * Extracts weight in kilograms from unit strings
+ * Examples: "Malla (45 kg)" -> 45, "Caja (20 kg)" -> 20
+ * @param unit Unit string
+ * @returns Weight in kg or null if not found
+ */
+export function extractWeightKg(unit: string): number | null {
+    const match = unit.match(/\((\d+)\s*kg\)/i);
+    return match ? parseInt(match[1], 10) : null;
+}
+
+
+
+================================================================================
+FILE PATH: scripts\number-normalizer.ts
+================================================================================
+
+/**
+ * Normalizes Costa Rican currency formatting to JavaScript numbers
+ * Handles various formats:
+ * - "3.000.00" (dot as thousands separator)
+ * - "1,500.00" (comma as thousands separator)
+ * - "44,800 " (trailing spaces)
+ * - "2800" (no separators)
+ */
+export function normalizePrice(priceString: string): number {
+    if (!priceString) return 0;
+
+    // Remove all whitespace
+    let cleaned = priceString.trim();
+
+    // Remove currency symbols if present
+    cleaned = cleaned.replace(/[₡$]/g, '');
+
+    // Count dots and commas to determine format
+    const dotCount = (cleaned.match(/\./g) || []).length;
+    const commaCount = (cleaned.match(/,/g) || []).length;
+
+    // Determine if we have a decimal point
+    let result: string;
+
+    if (dotCount > 1) {
+        // Format: "3.000.00" - dots are thousands separators
+        // Remove all dots except potentially the last one if it's followed by exactly 2 digits
+        const lastDotIndex = cleaned.lastIndexOf('.');
+        const afterLastDot = cleaned.substring(lastDotIndex + 1);
+
+        if (afterLastDot.length === 2) {
+            // Last dot is decimal separator
+            result = cleaned.replace(/\./g, (match, offset) =>
+                offset === lastDotIndex ? '.' : ''
+            );
+        } else {
+            // All dots are thousands separators
+            result = cleaned.replace(/\./g, '');
+        }
+    } else if (commaCount > 1) {
+        // Format: "1,000,000.00" - commas are thousands separators
+        result = cleaned.replace(/,/g, '');
+    } else if (dotCount === 1 && commaCount === 1) {
+        // Mixed format - determine which is decimal
+        const dotIndex = cleaned.indexOf('.');
+        const commaIndex = cleaned.indexOf(',');
+
+        if (dotIndex > commaIndex) {
+            // Comma is thousands: "1,500.00"
+            result = cleaned.replace(',', '');
+        } else {
+            // Dot is thousands: "1.500,00"
+            result = cleaned.replace('.', '').replace(',', '.');
+        }
+    } else if (dotCount === 1) {
+        // Single dot - check if it's decimal or thousands
+        const parts = cleaned.split('.');
+        if (parts[1] && parts[1].length <= 2) {
+            // Likely decimal: "1500.00"
+            result = cleaned;
+        } else {
+            // Likely thousands: "1.500"
+            result = cleaned.replace('.', '');
+        }
+    } else if (commaCount === 1) {
+        // Single comma - check if it's decimal or thousands
+        const parts = cleaned.split(',');
+        if (parts[1] && parts[1].length <= 2) {
+            // Likely decimal: "1500,00"
+            result = cleaned.replace(',', '.');
+        } else {
+            // Likely thousands: "1,500"
+            result = cleaned.replace(',', '');
+        }
+    } else {
+        // No separators
+        result = cleaned;
+    }
+
+    const parsed = parseFloat(result);
+    return isNaN(parsed) ? 0 : parsed;
+}
+
+/**
+ * Validates if a string looks like a price
+ */
+export function isValidPrice(str: string): boolean {
+    if (!str) return false;
+    const cleaned = str.trim().replace(/[₡$,.\s]/g, '');
+    return /^\d+$/.test(cleaned);
+}
+
+
+
+================================================================================
+FILE PATH: scripts\parse-bulletin.ts
+================================================================================
+
+import * as fs from 'fs';
+import * as path from 'path';
+import { BulletinSchema, Product } from './schema.zod';
+import { normalizePrice, isValidPrice } from './number-normalizer';
+import { categorizeProduct, extractWeightKg } from './category-config';
+
+const pdfParse = require('pdf-parse');
+
+/**
+ * Path to the PDF file
+ */
+const PDF_PATH = 'C:\\Users\\JimRD\\Desktop\\SIMM-Boletin de Precios PIMA-Plaza 2025-12-23.pdf';
+const OUTPUT_PATH = path.join(__dirname, '..', 'src', 'assets', 'data', 'current-prices.json');
+
+/**
+ * Extracts unit from a product line
+ */
+function extractUnit(line: string): string {
+    // Match full Malla/Caja patterns with weight first
+    const mallaMatch = line.match(/malla\s*\(\s*\d+\s*kg\s*\)/i);
+    if (mallaMatch) return mallaMatch[0];
+
+    const cajaMatch = line.match(/caja\s*\(\s*\d+\s*kg\s*\)/i);
+    if (cajaMatch) return cajaMatch[0];
+
+    // Simple unit patterns
+    const unitPatterns = [
+        /\b(kilo|kg)\b/i,
+        /\b(mata)\b/i,
+        /\b(unidad|unit)\b/i,
+        /\b(caja)\b/i,
+        /\b(malla)\b/i,
+        /\b(mano)\b/i,
+        /\b(racimo)\b/i,
+    ];
+
+    for (const pattern of unitPatterns) {
+        const match = line.match(pattern);
+        if (match) return match[1];
+    }
+
+    return 'Unidad';
+}
+
+/**
+ * State machine parser for multi-line product entries
+ */
+function parseProductsWithStateMachine(lines: string[]): Product[] {
+    const products: Product[] = [];
+    let productId = 1;
+
+    // Skip patterns for headers/footers
+    const skipPatterns = [
+        /PIMA/i,
+        /CENADA/i,
+        /Pag\.\s*\d+/i,
+        /Boletín/i,
+        /Producto/i,
+        /Mínimo/i,
+        /Máximo/i,
+        /Plaza/i,
+        /Fecha/i,
+    ];
+
+    const shouldSkipLine = (line: string): boolean => {
+        return skipPatterns.some(pattern => pattern.test(line)) || line.trim() === '';
+    };
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        if (shouldSkipLine(line)) continue;
+
+        // Detect product start: capitalized word at beginning
+        const nameMatch = line.match(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s\-()\/]+?)(?:\s+\d)/);
+        if (!nameMatch) continue;
+
+        let fullLine = line;
+        let name = nameMatch[1].trim();
+
+        // Check if next line might be a continuation (doesn't start with capital or is numeric)
+        while (i + 1 < lines.length) {
+            const nextLine = lines[i + 1].trim();
+            if (nextLine === '' || shouldSkipLine(nextLine)) break;
+            if (/^[A-ZÁÉÍÓÚÑ]/.test(nextLine)) break; // Next product started
+            if (/^\d/.test(nextLine)) break; // Just numbers, not part of name
+
+            // Continuation line
+            fullLine += ' ' + nextLine;
+            i++;
+        }
+
+        // Extract numbers (prices)
+        const numberPattern = /[\d,]+\.?\d*\s*[,.]?\s*\d*/g;
+        const numbers: number[] = [];
+        let match;
+
+        while ((match = numberPattern.exec(fullLine)) !== null) {
+            const numStr = match[0];
+            if (isValidPrice(numStr)) {
+                const normalized = normalizePrice(numStr);
+                if (normalized > 0) {
+                    numbers.push(normalized);
+                }
+            }
+        }
+
+        // We expect at least 4 numbers: min, max, mode, average
+        if (numbers.length < 4) continue;
+
+        const [priceMin, priceMax, mode, average] = numbers;
+
+        // Validate parsed numbers make sense
+        if (priceMin > priceMax || average <= 0) continue;
+
+        // Calculate volatility index
+        const volatilityIndex = average > 0 ? ((priceMax - priceMin) / average) : 0;
+
+        const unit = extractUnit(fullLine);
+        const category = categorizeProduct(name);
+        const weightKg = extractWeightKg(unit);
+
+        // Calculate pricePerKilo if we have weight
+        let pricePerKilo: number | undefined;
+        if (weightKg && weightKg > 0) {
+            pricePerKilo = average / weightKg;
+        }
+
+        products.push({
+            id: `prod-${productId}`,
+            name,
+            unit,
+            priceMin,
+            priceMax,
+            mode,
+            average,
+            volatilityIndex,
+            category,
+            ...(weightKg && { weightKg }),
+            ...(pricePerKilo && { pricePerKilo }),
+        });
+
+        productId++;
+    }
+
+    return products;
+}
+
+/**
+ * Main parsing function
+ */
+async function parseBulletin(): Promise<void> {
+    try {
+        console.log('📄 Reading PDF from:', PDF_PATH);
+
+        // Check if file exists
+        if (!fs.existsSync(PDF_PATH)) {
+            throw new Error(`PDF file not found at: ${PDF_PATH}`);
+        }
+
+        const dataBuffer = fs.readFileSync(PDF_PATH);
+        const data = await pdfParse(dataBuffer);
+
+        console.log('📊 PDF parsed successfully');
+        console.log(`   Pages: ${data.numpages}`);
+        console.log(`   Text length: ${data.text.length} characters`);
+
+        // Split text into lines
+        const lines = data.text.split('\n');
+        console.log(`   Lines: ${lines.length}`);
+
+        // Parse products with state machine
+        const products = parseProductsWithStateMachine(lines);
+
+        console.log(`✅ Parsed ${products.length} products`);
+
+        // Create bulletin object
+        const bulletin = {
+            date: '2025-12-23',
+            source: 'PIMA-CENADA' as const,
+            products,
+        };
+
+        // Validate with Zod
+        const validated = BulletinSchema.parse(bulletin);
+
+        console.log('✅ Data validated with Zod schema');
+
+        // Write to output file
+        const outputDir = path.dirname(OUTPUT_PATH);
+        if (!fs.existsSync(outputDir)) {
+            fs.mkdirSync(outputDir, { recursive: true });
+        }
+
+        fs.writeFileSync(OUTPUT_PATH, JSON.stringify(validated, null, 2));
+
+        console.log('✅ Data written to:', OUTPUT_PATH);
+        console.log('\n📈 Sample products:');
+        products.slice(0, 5).forEach(p => {
+            console.log(`   - ${p.name} (${p.unit}): ₡${p.priceMin} - ₡${p.priceMax} | Avg: ₡${p.average}`);
+            if (p.pricePerKilo) {
+                console.log(`     Per Kilo: ₡${p.pricePerKilo.toFixed(2)}`);
+            }
+        });
+
+    } catch (error) {
+        console.error('❌ Error parsing bulletin:', error);
+        throw error;
+    }
+}
+
+// Run the parser
+parseBulletin().catch(console.error);
+
+
+
+
+================================================================================
+FILE PATH: scripts\schema.zod.ts
+================================================================================
+
+import { z } from 'zod';
+
+/**
+ * Product Schema - Defines the structure for individual agricultural product pricing
+ */
+export const ProductSchema = z.object({
+    id: z.string(),
+    name: z.string(),
+    unit: z.string(),
+    priceMin: z.number(),
+    priceMax: z.number(),
+    mode: z.number(),
+    average: z.number(),
+    pricePerKilo: z.number().optional(),
+    volatilityIndex: z.number(), // (max - min) / average
+    category: z.enum(['Vegetable', 'Fruit', 'Tuber', 'Protein', 'Other']),
+    weightKg: z.number().optional(), // Extracted weight for Malla/Caja units
+});
+
+export type Product = z.infer<typeof ProductSchema>;
+
+/**
+ * Bulletin Schema - Defines the structure for the complete pricing bulletin
+ */
+export const BulletinSchema = z.object({
+    date: z.string(),
+    source: z.literal('PIMA-CENADA'),
+    products: z.array(ProductSchema),
+});
+
+export type Bulletin = z.infer<typeof BulletinSchema>;
+
+
+
+================================================================================
+FILE PATH: scripts\tsconfig.json
+================================================================================
+
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "commonjs",
+        "lib": [
+            "ES2020"
+        ],
+        "outDir": "./dist",
+        "rootDir": "./",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "moduleResolution": "node"
+    },
+    "include": [
+        "./**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
+
+
+================================================================================
+FILE PATH: src\app\app.config.ts
+================================================================================
+
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideHttpClient(),
+  ]
+};
+
+
+
+================================================================================
+FILE PATH: src\app\app.html
+================================================================================
+
+<app-dashboard></app-dashboard>
+
+
+================================================================================
+FILE PATH: src\app\app.scss
+================================================================================
+
+
+
+
+================================================================================
+FILE PATH: src\app\app.spec.ts
+================================================================================
+
+import { TestBed } from '@angular/core/testing';
+import { App } from './app';
+
+describe('App', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [App],
+    }).compileComponents();
+  });
+
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, cenada-dashboard');
+  });
+});
+
+
+
+================================================================================
+FILE PATH: src\app\app.ts
+================================================================================
+
+import { Component } from '@angular/core';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
+
+@Component({
+  selector: 'app-root',
+  imports: [DashboardComponent],
+  templateUrl: './app.html',
+  styleUrl: './app.scss'
+})
+export class App {
+  protected title = 'cenada-dashboard';
+}
+
+
+
+================================================================================
+FILE PATH: src\app\core\models\product.model.ts
+================================================================================
+
+export interface Product {
+    id: string;
+    name: string;
+    unit: string;
+    priceMin: number;
+    priceMax: number;
+    mode: number;
+    average: number;
+    pricePerKilo?: number;
+    volatilityIndex: number;
+    category: 'Vegetable' | 'Fruit' | 'Tuber' | 'Protein' | 'Other';
+    weightKg?: number;
+}
+
+export interface Bulletin {
+    date: string;
+    source: 'PIMA-CENADA';
+    products: Product[];
+}
+
+export interface PriceStats {
+    mostExpensive: Product | null;
+    cheapest: Product | null;
+    highestVolatility: Product | null;
+    totalProducts: number;
+}
+
+
+
+================================================================================
+FILE PATH: src\app\core\services\price-data.service.ts
+================================================================================
+
+import { Injectable, signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Product, Bulletin, PriceStats } from '../models/product.model';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class PriceDataService {
+    private bulletinData = signal<Bulletin | null>(null);
+    private searchTerm = signal<string>('');
+    private selectedCategory = signal<string>('All');
+
+    // Computed signals for reactive data
+    products = computed(() => this.bulletinData()?.products || []);
+
+    filteredProducts = computed(() => {
+        let products = this.products();
+        const search = this.searchTerm().toLowerCase();
+        const category = this.selectedCategory();
+
+        if (search) {
+            products = products.filter(p =>
+                p.name.toLowerCase().includes(search) ||
+                p.unit.toLowerCase().includes(search)
+            );
+        }
+
+        if (category !== 'All') {
+            products = products.filter(p => p.category === category);
+        }
+
+        return products;
+    });
+
+    stats = computed<PriceStats>(() => {
+        const products = this.products();
+
+        if (products.length === 0) {
+            return {
+                mostExpensive: null,
+                cheapest: null,
+                highestVolatility: null,
+                totalProducts: 0
+            };
+        }
+
+        // Helper to get normalized price (per-kilo if available, otherwise raw price)
+        const getNormalizedPrice = (p: Product, useMin: boolean): number => {
+            if (p.pricePerKilo) return p.pricePerKilo;
+            return useMin ? p.priceMin : p.priceMax;
+        };
+
+        // Most expensive based on normalized per-kilo pricing
+        const mostExpensive = products.reduce((max, p) => {
+            const currentPrice = getNormalizedPrice(p, false);
+            const maxPrice = getNormalizedPrice(max, false);
+            return currentPrice > maxPrice ? p : max;
+        }, products[0]);
+
+        // Cheapest based on normalized per-kilo pricing
+        const cheapest = products.reduce((min, p) => {
+            const currentPrice = getNormalizedPrice(p, true);
+            const minPrice = getNormalizedPrice(min, true);
+            return currentPrice < minPrice ? p : min;
+        }, products[0]);
+
+        const highestVolatility = products.reduce((max, p) =>
+            p.volatilityIndex > (max?.volatilityIndex || 0) ? p : max
+            , products[0]);
+
+        return {
+            mostExpensive,
+            cheapest,
+            highestVolatility,
+            totalProducts: products.length
+        };
+    });
+
+    categories = computed(() => {
+        const products = this.products();
+        const categorySet = new Set<string>();
+        products.forEach(p => {
+            if (p.category) {
+                categorySet.add(p.category);
+            }
+        });
+        return ['All', ...Array.from(categorySet).sort()];
+    });
+
+    constructor(private http: HttpClient) { }
+
+    loadPrices(): void {
+        this.http.get<Bulletin>('/assets/data/current-prices.json')
+            .subscribe({
+                next: (data) => {
+                    this.bulletinData.set(data);
+                },
+                error: (error) => {
+                    console.error('Error loading prices:', error);
+                }
+            });
+    }
+
+    setSearchTerm(term: string): void {
+        this.searchTerm.set(term);
+    }
+
+    setCategory(category: string): void {
+        this.selectedCategory.set(category);
+    }
+
+    getSelectedCategory(): string {
+        return this.selectedCategory();
+    }
+
+    getBulletinDate(): string {
+        return this.bulletinData()?.date || '';
+    }
+}
+
+
+
+================================================================================
+FILE PATH: src\app\features\dashboard\dashboard.component.html
+================================================================================
+
+<div class="dashboard-container">
+    <!-- Header Section -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="dashboard-title">CENADA Price Dashboard</h1>
+                <p class="dashboard-subtitle">
+                    <i class="pi pi-calendar"></i>
+                    {{ priceService.getBulletinDate() || '2025-12-23' }}
+                    <span class="source-badge">PIMA/CENADA Official Bulletin</span>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Overview -->
+    <section class="stats-overview">
+        <div class="stat-card most-expensive">
+            <div class="stat-icon">
+                <i class="pi pi-arrow-up"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-label">Most Expensive</h3>
+                @if (priceService.stats().mostExpensive) {
+                <p class="stat-value">{{ formatCurrency(priceService.stats().mostExpensive!.priceMax) }}</p>
+                <p class="stat-detail">{{ priceService.stats().mostExpensive!.name }}</p>
+                } @else {
+                <p class="stat-value">—</p>
+                }
+            </div>
+        </div>
+
+        <div class="stat-card budget-pick">
+            <div class="stat-icon">
+                <i class="pi pi-arrow-down"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-label">Budget Pick</h3>
+                @if (priceService.stats().cheapest) {
+                <p class="stat-value">{{ formatCurrency(priceService.stats().cheapest!.priceMin) }}</p>
+                <p class="stat-detail">{{ priceService.stats().cheapest!.name }}</p>
+                } @else {
+                <p class="stat-value">—</p>
+                }
+            </div>
+        </div>
+
+        <div class="stat-card high-volatility">
+            <div class="stat-icon">
+                <i class="pi pi-chart-line"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-label">High Volatility</h3>
+                @if (priceService.stats().highestVolatility) {
+                <p class="stat-value">{{ (priceService.stats().highestVolatility!.volatilityIndex * 100).toFixed(1) }}%
+                </p>
+                <p class="stat-detail">{{ priceService.stats().highestVolatility!.name }}</p>
+                } @else {
+                <p class="stat-value">—</p>
+                }
+            </div>
+        </div>
+
+        <div class="stat-card total-products">
+            <div class="stat-icon">
+                <i class="pi pi-box"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-label">Total Products</h3>
+                <p class="stat-value">{{ priceService.stats().totalProducts }}</p>
+                <p class="stat-detail">Available today</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="search-box">
+            <p-iconfield iconPosition="left">
+                <p-inputicon styleClass="pi pi-search" />
+                <input type="text" pInputText placeholder="Search products..." [(ngModel)]="searchValue"
+                    (input)="onSearch($event)" class="search-input" />
+            </p-iconfield>
+        </div>
+
+        <div class="category-filters">
+            @for (category of priceService.categories(); track category) {
+            <button pButton [label]="category" (click)="selectCategory(category)"
+                [class.active]="priceService.getSelectedCategory() === category" class="category-chip"></button>
+            }
+        </div>
+    </section>
+
+    <!-- Price Grid -->
+    <section class="price-grid-section">
+        <p-table [value]="priceService.filteredProducts()" [tableStyle]="{ 'min-width': '60rem' }"
+            styleClass="price-table" [rowHover]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">
+                        Product Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th>Unit</th>
+                    <th pSortableColumn="average" style="min-width: 300px;">
+                        Price Range
+                        <p-sortIcon field="average"></p-sortIcon>
+                    </th>
+                    <th>Volatility</th>
+                    <th>Category</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td class="product-name">{{ product.name }}</td>
+                    <td class="unit-cell">{{ product.unit }}</td>
+                    <td class="price-range-cell">
+                        <app-price-range-bar [min]="product.priceMin" [max]="product.priceMax"
+                            [average]="product.average">
+                        </app-price-range-bar>
+                    </td>
+                    <td>
+                        <p-tag [value]="getVolatilityLabel(product.volatilityIndex)"
+                            [severity]="getVolatilityColor(product.volatilityIndex)" [rounded]="true"></p-tag>
+                    </td>
+                    <td>
+                        <span class="category-badge" [attr.data-category]="product.category">
+                            {{ product.category }}
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="5" class="empty-state">
+                        <i class="pi pi-inbox"></i>
+                        <p>No products found matching your search.</p>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </section>
+</div>
+
+
+================================================================================
+FILE PATH: src\app\features\dashboard\dashboard.component.scss
+================================================================================
+
+.dashboard-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    padding: 2rem;
+    color: #e2e8f0;
+}
+
+/* Header */
+.dashboard-header {
+    margin-bottom: 2.5rem;
+
+    .title-section {
+        .dashboard-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.125rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+
+            i {
+                color: #0d9488;
+            }
+
+            .source-badge {
+                background: rgba(13, 148, 136, 0.1);
+                border: 1px solid rgba(13, 148, 136, 0.3);
+                padding: 0.25rem 0.75rem;
+                border-radius: 1rem;
+                font-size: 0.875rem;
+                color: #14b8a6;
+                margin-left: 0.5rem;
+            }
+        }
+    }
+}
+
+/* Stats Overview */
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 1rem;
+        padding: 1.75rem;
+        display: flex;
+        gap: 1.25rem;
+        transition: all 0.2s ease-out;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            opacity: 0;
+            transition: opacity 0.2s ease-out;
+        }
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.15);
+
+            &::before {
+                opacity: 1;
+            }
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            flex-shrink: 0;
+        }
+
+        .stat-content {
+            flex: 1;
+
+            .stat-label {
+                font-size: 0.875rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #94a3b8;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 0.25rem;
+                line-height: 1;
+            }
+
+            .stat-detail {
+                font-size: 0.875rem;
+                color: #cbd5e1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        &.most-expensive {
+            color: #f43f5e;
+
+            .stat-icon {
+                background: rgba(244, 63, 94, 0.1);
+                color: #f43f5e;
+            }
+        }
+
+        &.budget-pick {
+            color: #10b981;
+
+            .stat-icon {
+                background: rgba(16, 185, 129, 0.1);
+                color: #10b981;
+            }
+        }
+
+        &.high-volatility {
+            color: #f59e0b;
+
+            .stat-icon {
+                background: rgba(245, 158, 11, 0.1);
+                color: #f59e0b;
+            }
+        }
+
+        &.total-products {
+            color: #14b8a6;
+
+            .stat-icon {
+                background: rgba(20, 184, 166, 0.1);
+                color: #14b8a6;
+            }
+        }
+    }
+}
+
+/* Filters */
+.filters-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+
+    .search-box {
+        margin-bottom: 1.25rem;
+
+        ::ng-deep .p-inputtext {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            padding: 0.875rem 1rem 0.875rem 2.75rem;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.2s ease-out;
+
+            &:focus {
+                background: rgba(255, 255, 255, 0.08);
+                border-color: #0d9488;
+                box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+            }
+
+            &::placeholder {
+                color: #64748b;
+            }
+        }
+
+        ::ng-deep .pi-search {
+            color: #64748b;
+        }
+    }
+
+    .category-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+
+        .category-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 0.5rem 1.25rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease-out;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.08);
+                border-color: rgba(255, 255, 255, 0.15);
+                transform: translateY(-1px);
+            }
+
+            &.active {
+                background: #0d9488;
+                border-color: #0d9488;
+                color: white;
+                box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+            }
+        }
+    }
+}
+
+/* Price Table */
+.price-grid-section {
+    ::ng-deep .price-table {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 1rem;
+        overflow: hidden;
+
+        .p-datatable-header {
+            background: transparent;
+            border: none;
+            padding: 1.5rem;
+        }
+
+        .p-datatable-thead>tr>th {
+            background: rgba(255, 255, 255, 0.03);
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            padding: 1rem 1.25rem;
+        }
+
+        .p-datatable-tbody>tr {
+            background: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.15s ease-out;
+
+            &:hover {
+                background: rgba(13, 148, 136, 0.05);
+            }
+
+            >td {
+                border: none;
+                color: #e2e8f0;
+                padding: 1.25rem;
+                font-size: 0.9375rem;
+            }
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .price-cell {
+            font-variant-numeric: tabular-nums;
+            color: #cbd5e1;
+
+            &.average {
+                font-weight: 600;
+                color: #14b8a6;
+            }
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.35rem 0.875rem;
+            border-radius: 0.5rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            &[data-category='Vegetable'] {
+                background: rgba(34, 197, 94, 0.1);
+                color: #22c55e;
+                border-color: rgba(34, 197, 94, 0.2);
+            }
+
+            &[data-category='Fruit'] {
+                background: rgba(249, 115, 22, 0.1);
+                color: #f97316;
+                border-color: rgba(249, 115, 22, 0.2);
+            }
+
+            &[data-category='Tuber'] {
+                background: rgba(168, 85, 247, 0.1);
+                color: #a855f7;
+                border-color: rgba(168, 85, 247, 0.2);
+            }
+
+            &[data-category='Protein'] {
+                background: rgba(236, 72, 153, 0.1);
+                color: #ec4899;
+                border-color: rgba(236, 72, 153, 0.2);
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+
+            i {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                display: block;
+                opacity: 0.5;
+            }
+
+            p {
+                font-size: 1.125rem;
+            }
+        }
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+
+    .stats-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header .title-section .dashboard-title {
+        font-size: 2rem;
+    }
+}
+
+
+================================================================================
+FILE PATH: src\app\features\dashboard\dashboard.component.ts
+================================================================================
+
+import { Component, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { TagModule } from 'primeng/tag';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { PriceDataService } from '../../core/services/price-data.service';
+import { Product } from '../../core/models/product.model';
+import { PriceRangeBarComponent } from '../../shared/components/price-range-bar/price-range-bar.component';
+
+@Component({
+    selector: 'app-dashboard',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        TableModule,
+        InputTextModule,
+        ButtonModule,
+        CardModule,
+        TagModule,
+        IconFieldModule,
+        InputIconModule,
+        PriceRangeBarComponent
+    ],
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss']
+})
+export class DashboardComponent implements OnInit {
+    searchValue = '';
+
+    constructor(public priceService: PriceDataService) { }
+
+    ngOnInit(): void {
+        this.priceService.loadPrices();
+    }
+
+    onSearch(event: any): void {
+        this.priceService.setSearchTerm(event.target.value);
+    }
+
+    selectCategory(category: string): void {
+        this.priceService.setCategory(category);
+    }
+
+    getVolatilityColor(volatility: number): 'success' | 'warn' | 'danger' {
+        if (volatility < 0.15) return 'success';
+        if (volatility < 0.35) return 'warn';
+        return 'danger';
+    }
+
+    getVolatilityLabel(volatility: number): string {
+        if (volatility < 0.15) return 'Low';
+        if (volatility < 0.35) return 'Medium';
+        return 'High';
+    }
+
+    formatCurrency(value: number): string {
+        return `₡${value.toLocaleString('es-CR')}`;
+    }
+}
+
+
+
+================================================================================
+FILE PATH: src\app\shared\components\price-range-bar\price-range-bar.component.ts
+================================================================================
+
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+    selector: 'app-price-range-bar',
+    standalone: true,
+    imports: [CommonModule],
+    template: `
+        <div class="price-range-container">
+            <div class="price-range-bar">
+                <div class="range-fill" [style.left.%]="0" [style.width.%]="100"></div>
+                <div class="average-marker" [style.left.%]="averagePosition" [title]="'Average: ' + formatPrice(average)">
+                    <div class="marker-dot"></div>
+                </div>
+            </div>
+            <div class="price-labels">
+                <span class="min-label">{{ formatPrice(min) }}</span>
+                <span class="avg-label">{{ formatPrice(average) }}</span>
+                <span class="max-label">{{ formatPrice(max) }}</span>
+            </div>
+        </div>
+    `,
+    styles: [`
+        .price-range-container {
+            width: 100%;
+            padding: 0.5rem 0;
+        }
+
+        .price-range-bar {
+            position: relative;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+        .range-fill {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #f59e0b 50%, #f43f5e 100%);
+            border-radius: 4px;
+        }
+
+        .average-marker {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        .marker-dot {
+            width: 14px;
+            height: 14px;
+            background: #14b8a6;
+            border: 2px solid #0f172a;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(20, 184, 166, 0.5);
+            cursor: help;
+            transition: transform 0.2s ease;
+        }
+
+        .marker-dot:hover {
+            transform: scale(1.3);
+        }
+
+        .price-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .avg-label {
+            font-weight: 600;
+            color: #14b8a6;
+        }
+    `]
+})
+export class PriceRangeBarComponent {
+    @Input() min!: number;
+    @Input() max!: number;
+    @Input() average!: number;
+
+    get averagePosition(): number {
+        if (this.max === this.min) return 50;
+        return ((this.average - this.min) / (this.max - this.min)) * 100;
+    }
+
+    formatPrice(value: number): string {
+        if (value === undefined || value === null || isNaN(value)) {
+            return '₡0';
+        }
+        return `₡${value.toLocaleString('es-CR')}`;
+    }
+}
+
+
+
+================================================================================
+FILE PATH: src\assets\data\current-prices.json
+================================================================================
+
+{
+    "date": "2025-12-23",
+    "source": "PIMA-CENADA",
+    "products": [
+        {
+            "id": "prod-1",
+            "name": "Apio verde (mata)",
+            "unit": "Mata",
+            "priceMin": 1400,
+            "priceMax": 2000,
+            "mode": 1500,
+            "average": 1600,
+            "volatilityIndex": 0.375,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-2",
+            "name": "Ayote sazón",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-3",
+            "name": "Banano maduro",
+            "unit": "Kilo",
+            "priceMin": 600,
+            "priceMax": 900,
+            "mode": 700,
+            "average": 750,
+            "volatilityIndex": 0.4,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-4",
+            "name": "Banano verde",
+            "unit": "Kilo",
+            "priceMin": 500,
+            "priceMax": 800,
+            "mode": 600,
+            "average": 650,
+            "volatilityIndex": 0.462,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-5",
+            "name": "Brócoli",
+            "unit": "Kilo",
+            "priceMin": 2500,
+            "priceMax": 3500,
+            "mode": 3000,
+            "average": 2900,
+            "volatilityIndex": 0.345,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-6",
+            "name": "Cebolla amarilla",
+            "unit": "Malla (25 kg)",
+            "priceMin": 18000,
+            "priceMax": 22000,
+            "mode": 20000,
+            "average": 19500,
+            "pricePerKilo": 780,
+            "volatilityIndex": 0.205,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-7",
+            "name": "Cebolla blanca",
+            "unit": "Kilo",
+            "priceMin": 1200,
+            "priceMax": 1800,
+            "mode": 1500,
+            "average": 1450,
+            "volatilityIndex": 0.414,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-8",
+            "name": "Chile dulce jumbo",
+            "unit": "Kilo",
+            "priceMin": 1800,
+            "priceMax": 2800,
+            "mode": 2200,
+            "average": 2150,
+            "volatilityIndex": 0.465,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-9",
+            "name": "Chile dulce primera",
+            "unit": "Kilo",
+            "priceMin": 1500,
+            "priceMax": 2200,
+            "mode": 1800,
+            "average": 1750,
+            "volatilityIndex": 0.4,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-10",
+            "name": "Coliflor",
+            "unit": "Kilo",
+            "priceMin": 2200,
+            "priceMax": 3200,
+            "mode": 2800,
+            "average": 2650,
+            "volatilityIndex": 0.377,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-11",
+            "name": "Elote tierno (unidad)",
+            "unit": "Unidad",
+            "priceMin": 200,
+            "priceMax": 350,
+            "mode": 250,
+            "average": 270,
+            "volatilityIndex": 0.556,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-12",
+            "name": "Espinaca",
+            "unit": "Kilo",
+            "priceMin": 3000,
+            "priceMax": 4500,
+            "mode": 3500,
+            "average": 3600,
+            "volatilityIndex": 0.417,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-13",
+            "name": "Fresa",
+            "unit": "Kilo",
+            "priceMin": 5000,
+            "priceMax": 7000,
+            "mode": 6000,
+            "average": 5800,
+            "volatilityIndex": 0.345,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-14",
+            "name": "Lechuga americana",
+            "unit": "Unidad",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-15",
+            "name": "Lechuga romana",
+            "unit": "Unidad",
+            "priceMin": 700,
+            "priceMax": 1000,
+            "mode": 850,
+            "average": 820,
+            "volatilityIndex": 0.366,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-16",
+            "name": "Limón criollo",
+            "unit": "Kilo",
+            "priceMin": 1200,
+            "priceMax": 1800,
+            "mode": 1500,
+            "average": 1450,
+            "volatilityIndex": 0.414,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-17",
+            "name": "Limón mesino",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1400,
+            "mode": 1100,
+            "average": 1050,
+            "volatilityIndex": 0.571,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-18",
+            "name": "Mandarina",
+            "unit": "Kilo",
+            "priceMin": 1500,
+            "priceMax": 2200,
+            "mode": 1800,
+            "average": 1750,
+            "volatilityIndex": 0.4,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-19",
+            "name": "Mango verde",
+            "unit": "Kilo",
+            "priceMin": 1000,
+            "priceMax": 1600,
+            "mode": 1300,
+            "average": 1250,
+            "volatilityIndex": 0.48,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-20",
+            "name": "Manzana verde",
+            "unit": "Kilo",
+            "priceMin": 2500,
+            "priceMax": 3500,
+            "mode": 3000,
+            "average": 2850,
+            "volatilityIndex": 0.351,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-21",
+            "name": "Manzana roja",
+            "unit": "Kilo",
+            "priceMin": 2800,
+            "priceMax": 3800,
+            "mode": 3200,
+            "average": 3100,
+            "volatilityIndex": 0.323,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-22",
+            "name": "Melón",
+            "unit": "Kilo",
+            "priceMin": 900,
+            "priceMax": 1400,
+            "mode": 1100,
+            "average": 1100,
+            "volatilityIndex": 0.455,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-23",
+            "name": "Naranja dulce",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-24",
+            "name": "Papá blanca",
+            "unit": "Malla (45 kg)",
+            "priceMin": 35000,
+            "priceMax": 45000,
+            "mode": 40000,
+            "average": 39000,
+            "pricePerKilo": 867,
+            "volatilityIndex": 0.256,
+            "category": "Tuber"
+        },
+        {
+            "id": "prod-25",
+            "name": "Papa roja",
+            "unit": "Malla (45 kg)",
+            "priceMin": 38000,
+            "priceMax": 48000,
+            "mode": 42000,
+            "average": 41500,
+            "pricePerKilo": 922,
+            "volatilityIndex": 0.241,
+            "category": "Tuber"
+        },
+        {
+            "id": "prod-26",
+            "name": "Papaya",
+            "unit": "Kilo",
+            "priceMin": 700,
+            "priceMax": 1100,
+            "mode": 900,
+            "average": 850,
+            "volatilityIndex": 0.471,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-27",
+            "name": "Pepino de ensalada",
+            "unit": "Kilo",
+            "priceMin": 1200,
+            "priceMax": 1800,
+            "mode": 1500,
+            "average": 1450,
+            "volatilityIndex": 0.414,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-28",
+            "name": "Piña golden",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-29",
+            "name": "Plátano verde",
+            "unit": "Kilo",
+            "priceMin": 700,
+            "priceMax": 1100,
+            "mode": 900,
+            "average": 850,
+            "volatilityIndex": 0.471,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-30",
+            "name": "Repollo blanco",
+            "unit": "Kilo",
+            "priceMin": 600,
+            "priceMax": 1000,
+            "mode": 800,
+            "average": 750,
+            "volatilityIndex": 0.533,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-31",
+            "name": "Repollo morado",
+            "unit": "Kilo",
+            "priceMin": 1000,
+            "priceMax": 1600,
+            "mode": 1300,
+            "average": 1250,
+            "volatilityIndex": 0.48,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-32",
+            "name": "Sandía",
+            "unit": "Kilo",
+            "priceMin": 500,
+            "priceMax": 800,
+            "mode": 650,
+            "average": 620,
+            "volatilityIndex": 0.484,
+            "category": "Fruit"
+        },
+        {
+            "id": "prod-33",
+            "name": "Tomate cordobés",
+            "unit": "Caja",
+            "priceMin": 15000,
+            "priceMax": 20000,
+            "mode": 17500,
+            "average": 17000,
+            "volatilityIndex": 0.294,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-34",
+            "name": "Tomate milano",
+            "unit": "Caja",
+            "priceMin": 18000,
+            "priceMax": 24000,
+            "mode": 21000,
+            "average": 20500,
+            "volatilityIndex": 0.293,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-35",
+            "name": "Vainica",
+            "unit": "Kilo",
+            "priceMin": 2000,
+            "priceMax": 3000,
+            "mode": 2500,
+            "average": 2400,
+            "volatilityIndex": 0.417,
+            "category": "Vegetable"
+        },
+        {
+            "id": "prod-36",
+            "name": "Yuca",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1200,
+            "mode": 1000,
+            "average": 950,
+            "volatilityIndex": 0.421,
+            "category": "Tuber"
+        },
+        {
+            "id": "prod-37",
+            "name": "Zanahoria",
+            "unit": "Kilo",
+            "priceMin": 800,
+            "priceMax": 1400,
+            "mode": 1100,
+            "average": 1050,
+            "volatilityIndex": 0.571,
+            "category": "Vegetable"
+        }
+    ]
+}
+
+
+================================================================================
+FILE PATH: src\index.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>CENADA Price Dashboard</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- PrimeNG CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/primeng@18.0.0/resources/themes/lara-dark-teal/theme.css">
+  <link rel="stylesheet" href="https://unpkg.com/primeng@18.0.0/resources/primeng.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/primeicons@7.0.0/primeicons.css">
+</head>
+
+<body>
+  <app-root></app-root>
+</body>
+
+</html>
+
+
+================================================================================
+FILE PATH: src\main.ts
+================================================================================
+
+import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app/app.config';
+import { App } from './app/app';
+
+bootstrapApplication(App, appConfig)
+  .catch((err) => console.error(err));
+
+
+
+================================================================================
+FILE PATH: src\styles.scss
+================================================================================
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global Styles */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(13, 148, 136, 0.3);
+    border-radius: 4px;
+
+    &:hover {
+        background: rgba(13, 148, 136, 0.5);
+    }
+}
+
+
+================================================================================
+FILE PATH: tsconfig.app.json
+================================================================================
+
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts"
+  ]
+}
+
+
+
+================================================================================
+FILE PATH: tsconfig.json
+================================================================================
+
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve"
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "typeCheckHostBindings": true,
+    "strictTemplates": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}
+
+
+
+================================================================================
+FILE PATH: tsconfig.spec.json
+================================================================================
+
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jasmine"
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
+
+

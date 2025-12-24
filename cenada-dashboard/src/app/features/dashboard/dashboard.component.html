@@ -1,0 +1,163 @@
+<div class="dashboard-container">
+    <!-- Header Section -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="dashboard-title">
+                    CENADA Price Dashboar<span class="title-with-link">d<a href="https://www.pima.go.cr/boletin/"
+                            target="_blank" rel="noopener noreferrer" class="bulletin-link"
+                            title="View PIMA Official Bulletin"><i class="pi pi-external-link"></i></a></span>
+                </h1>
+                <p class="dashboard-subtitle">
+                    <i class="pi pi-calendar"></i>
+                    {{ priceService.getBulletinDate() || '2025-12-23' }}
+                    <span class="source-badge">PIMA/CENADA Official Bulletin</span>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Overview -->
+    <section class="stats-overview">
+        <div class="stat-card most-expensive">
+            <div class="stat-icon">
+                <i class="pi pi-arrow-up"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-label">Most Expensive</h3>
+                @if (priceService.stats().mostExpensive) {
+                <p class="stat-value">{{ formatCurrency(priceService.stats().mostExpensive!.priceMax) }}</p>
+                <p class="stat-detail">{{ priceService.stats().mostExpensive!.name }}</p>
+                } @else {
+                <p class="stat-value">—</p>
+                }
+            </div>
+        </div>
+
+        <div class="stat-card budget-pick">
+            <div class="stat-icon">
+                <i class="pi pi-arrow-down"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-label">Budget Pick</h3>
+                @if (priceService.stats().cheapest) {
+                <p class="stat-value">{{ formatCurrency(priceService.stats().cheapest!.priceMin) }}</p>
+                <p class="stat-detail">{{ priceService.stats().cheapest!.name }}</p>
+                } @else {
+                <p class="stat-value">—</p>
+                }
+            </div>
+        </div>
+
+        <div class="stat-card high-volatility">
+            <div class="stat-icon">
+                <i class="pi pi-chart-line"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-label">High Volatility</h3>
+                @if (priceService.stats().highestVolatility) {
+                <p class="stat-value">{{ (priceService.stats().highestVolatility!.volatilityIndex * 100).toFixed(1) }}%
+                </p>
+                <p class="stat-detail">{{ priceService.stats().highestVolatility!.name }}</p>
+                } @else {
+                <p class="stat-value">—</p>
+                }
+            </div>
+        </div>
+
+        <div class="stat-card total-products">
+            <div class="stat-icon">
+                <i class="pi pi-box"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-label">Total Products</h3>
+                <p class="stat-value">{{ priceService.stats().totalProducts }}</p>
+                <p class="stat-detail">Available today</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="search-box">
+            <p-iconfield iconPosition="left">
+                <p-inputicon styleClass="pi pi-search" />
+                <input type="text" pInputText placeholder="Search..." [(ngModel)]="searchValue"
+                    (input)="onSearch($event)" class="search-input" />
+            </p-iconfield>
+        </div>
+
+        <div class="filter-controls">
+            <div class="category-filters">
+                @for (category of priceService.categories(); track category) {
+                <button pButton [label]="category" (click)="selectCategory(category)"
+                    [class.active]="priceService.getSelectedCategory() === category" class="category-chip"></button>
+                }
+            </div>
+
+            <button pButton [icon]="getDensityIcon()" (click)="toggleDensity()" class="p-button-text density-toggle"
+                [pTooltip]="'Density: ' + dataDensity()" tooltipPosition="left">
+            </button>
+        </div>
+    </section>
+
+    <!-- Price Grid -->
+    <section class="price-grid-section" [attr.data-density]="dataDensity()">
+        <p-table [value]="priceService.filteredProducts()" [tableStyle]="{ 'min-width': '60rem' }"
+            styleClass="price-table" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [virtualScroll]="true"
+            [virtualScrollItemSize]="dataDensity() === 'compact' ? 45 : dataDensity() === 'comfortable' ? 60 : 80">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">
+                        Product
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th>Unit</th>
+                    <th pSortableColumn="average" style="min-width: 250px;">
+                        Price Range
+                        <p-sortIcon field="average"></p-sortIcon>
+                    </th>
+                    <th>Volatility</th>
+                    <th>Category</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-product>
+                <tr (click)="onProductClick(product)" class="clickable-row">
+                    <td class="product-name">{{ product.name }}</td>
+                    <td class="unit-cell">{{ product.unit }}</td>
+                    <td class="price-range-cell">
+                        <app-price-range-bar [min]="product.priceMin" [max]="product.priceMax"
+                            [average]="product.average" [mode]="product.mode">
+                        </app-price-range-bar>
+                    </td>
+                    <td>
+                        <p-tag [value]="getVolatilityLabel(product.volatilityIndex)"
+                            [severity]="getVolatilityColor(product.volatilityIndex)" [rounded]="true"></p-tag>
+                    </td>
+                    <td>
+                        <span class="category-badge" [attr.data-category]="product.category">
+                            {{ product.category }}
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="5" class="empty-state">
+                        <i class="pi pi-inbox"></i>
+                        <p>No products found matching your search.</p>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </section>
+
+    <!-- Product Detail Panel -->
+    <app-product-detail-panel [product]="selectedProduct()" [visible]="detailPanelVisible()"
+        (close)="closeDetailPanel()"></app-product-detail-panel>
+
+    <!-- Back to Top Button -->
+    <app-back-to-top></app-back-to-top>
+</div>

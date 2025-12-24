@@ -1,0 +1,62 @@
+@if (visible && product) {
+<div class="panel-overlay" (click)="closePanel()"></div>
+<aside class="detail-panel">
+    <div class="panel-header">
+        <h2 class="panel-title">Product Details</h2>
+        <button pButton icon="pi pi-times" class="p-button-text p-button-rounded close-btn"
+            (click)="closePanel()"></button>
+    </div>
+
+    <div class="panel-content">
+        <div class="product-header">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <span class="category-badge" [attr.data-category]="product.category">
+                {{ product.category }}
+            </span>
+        </div>
+
+        <div class="detail-section">
+            <label>Unit</label>
+            <p class="detail-value">{{ product.unit }}</p>
+        </div>
+
+        <div class="detail-section">
+            <label>Price Range</label>
+            <div class="price-range-display">
+                <div class="price-info">
+                    <span class="price-label">Min</span>
+                    <span class="price-value">{{ formatCurrency(product.priceMin) }}</span>
+                </div>
+                <div class="price-info">
+                    <span class="price-label">Mode</span>
+                    <span class="price-value mode">{{ formatCurrency(product.mode) }}</span>
+                </div>
+                <div class="price-info">
+                    <span class="price-label">Avg</span>
+                    <span class="price-value average">{{ formatCurrency(product.average) }}</span>
+                </div>
+                <div class="price-info">
+                    <span class="price-label">Max</span>
+                    <span class="price-value">{{ formatCurrency(product.priceMax) }}</span>
+                </div>
+            </div>
+            <div class="price-bar-container">
+                <app-price-range-bar [min]="product.priceMin" [max]="product.priceMax" [average]="product.average"
+                    [mode]="product.mode"></app-price-range-bar>
+            </div>
+        </div>
+
+        @if (product.pricePerKilo) {
+        <div class="detail-section">
+            <label>Price per Kilogram</label>
+            <p class="detail-value highlighted">{{ formatCurrency(product.pricePerKilo) }}</p>
+        </div>
+        }
+
+        <div class="detail-section">
+            <label>Volatility Index</label>
+            <p class="detail-value">{{ (product.volatilityIndex * 100).toFixed(1) }}%</p>
+        </div>
+    </div>
+</aside>
+}

@@ -1,0 +1,10 @@
+{
+    "COMMON": {
+        "WELCOME": "Bienvenido",
+        "LANGUAGE": "Idioma",
+        "ENGLISH": "Inglés",
+        "SPANISH": "Español",
+        "OVERVIEW": "Resumen",
+        "PRODUCTS": "Productos"
+    }
+}
